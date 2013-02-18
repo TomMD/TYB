@@ -9,197 +9,232 @@ accVarRef :: Exp -> Set.Set Name -> Set.Set Name
 accVarRef (VarE n) set = Set.insert n set
 accVarRef _        set = set
 varSet :: Exp -> Set.Set Name
-varSet e_0 = (let memoized_1 = \x_2 acc_3 -> accVarRef x_2 ((\_x_4 -> case _x_4 of
-                                                                               Language.Haskell.TH.Syntax.VarE arg_5 -> memoized_6 arg_5 acc_3
-                                                                               Language.Haskell.TH.Syntax.ConE arg_7 -> memoized_6 arg_7 acc_3
-                                                                               Language.Haskell.TH.Syntax.LitE arg_8 -> memoized_9 arg_8 acc_3
-                                                                               Language.Haskell.TH.Syntax.AppE arg_10
-                                                                                                               arg_11 -> memoized_1 arg_10 (memoized_1 arg_11 acc_3)
-                                                                               Language.Haskell.TH.Syntax.InfixE arg_12
-                                                                                                                 arg_13
-                                                                                                                 arg_14 -> memoized_15 arg_12 (memoized_1 arg_13 (memoized_15 arg_14 acc_3))
-                                                                               Language.Haskell.TH.Syntax.LamE arg_16
-                                                                                                               arg_17 -> memoized_18 arg_16 (memoized_1 arg_17 acc_3)
-                                                                               Language.Haskell.TH.Syntax.TupE arg_19 -> memoized_20 arg_19 acc_3
-                                                                               Language.Haskell.TH.Syntax.CondE arg_21
-                                                                                                                arg_22
-                                                                                                                arg_23 -> memoized_1 arg_21 (memoized_1 arg_22 (memoized_1 arg_23 acc_3))
-                                                                               Language.Haskell.TH.Syntax.LetE arg_24
-                                                                                                               arg_25 -> memoized_26 arg_24 (memoized_1 arg_25 acc_3)
-                                                                               Language.Haskell.TH.Syntax.CaseE arg_27
-                                                                                                                arg_28 -> memoized_1 arg_27 (memoized_29 arg_28 acc_3)
-                                                                               Language.Haskell.TH.Syntax.DoE arg_30 -> memoized_31 arg_30 acc_3
-                                                                               Language.Haskell.TH.Syntax.CompE arg_32 -> memoized_31 arg_32 acc_3
-                                                                               Language.Haskell.TH.Syntax.ArithSeqE arg_33 -> memoized_34 arg_33 acc_3
-                                                                               Language.Haskell.TH.Syntax.ListE arg_35 -> memoized_20 arg_35 acc_3
-                                                                               Language.Haskell.TH.Syntax.SigE arg_36
-                                                                                                               arg_37 -> memoized_1 arg_36 (memoized_38 arg_37 acc_3)
-                                                                               Language.Haskell.TH.Syntax.RecConE arg_39
-                                                                                                                  arg_40 -> memoized_6 arg_39 (memoized_41 arg_40 acc_3)
-                                                                               Language.Haskell.TH.Syntax.RecUpdE arg_42
-                                                                                                                  arg_43 -> memoized_1 arg_42 (memoized_41 arg_43 acc_3)) x_2)
-                  memoized_41 = \x_44 acc_45 -> GHC.Base.const GHC.Base.id x_44 ((\_x_46 -> case _x_46 of
-                                                                                                [] -> acc_45
-                                                                                                (:) arg_47
-                                                                                                              arg_48 -> memoized_49 arg_47 (memoized_41 arg_48 acc_45)) x_44)
-                  memoized_49 = \x_50 acc_51 -> GHC.Base.const GHC.Base.id x_50 ((\_x_52 -> case _x_52 of
-                                                                                                (,) arg_53
-                                                                                                              arg_54 -> memoized_6 arg_53 (memoized_1 arg_54 acc_51)) x_50)
-                  memoized_34 = \x_55 acc_56 -> GHC.Base.const GHC.Base.id x_55 ((\_x_57 -> case _x_57 of
-                                                                                                Language.Haskell.TH.Syntax.FromR arg_58 -> memoized_1 arg_58 acc_56
-                                                                                                Language.Haskell.TH.Syntax.FromThenR arg_59
-                                                                                                                                     arg_60 -> memoized_1 arg_59 (memoized_1 arg_60 acc_56)
-                                                                                                Language.Haskell.TH.Syntax.FromToR arg_61
-                                                                                                                                   arg_62 -> memoized_1 arg_61 (memoized_1 arg_62 acc_56)
-                                                                                                Language.Haskell.TH.Syntax.FromThenToR arg_63
-                                                                                                                                       arg_64
-                                                                                                                                       arg_65 -> memoized_1 arg_63 (memoized_1 arg_64 (memoized_1 arg_65 acc_56))) x_55)
-                  memoized_29 = \x_66 acc_67 -> GHC.Base.const GHC.Base.id x_66 ((\_x_68 -> case _x_68 of
-                                                                                                [] -> acc_67
-                                                                                                (:) arg_69
-                                                                                                              arg_70 -> memoized_71 arg_69 (memoized_29 arg_70 acc_67)) x_66)
-                  memoized_71 = \x_72 acc_73 -> GHC.Base.const GHC.Base.id x_72 ((\_x_74 -> case _x_74 of
-                                                                                                Language.Haskell.TH.Syntax.Match arg_75
-                                                                                                                                 arg_76
-                                                                                                                                 arg_77 -> memoized_78 arg_75 (memoized_79 arg_76 (memoized_26 arg_77 acc_73))) x_72)
-                  memoized_26 = \x_80 acc_81 -> GHC.Base.const GHC.Base.id x_80 ((\_x_82 -> case _x_82 of
-                                                                                                [] -> acc_81
-                                                                                                (:) arg_83
-                                                                                                              arg_84 -> memoized_85 arg_83 (memoized_26 arg_84 acc_81)) x_80)
-                  memoized_85 = \x_86 acc_87 -> GHC.Base.const GHC.Base.id x_86 ((\_x_88 -> case _x_88 of
-                                                                                                Language.Haskell.TH.Syntax.FunD arg_89
-                                                                                                                                arg_90 -> memoized_6 arg_89 (memoized_91 arg_90 acc_87)
-                                                                                                Language.Haskell.TH.Syntax.ValD arg_92
-                                                                                                                                arg_93
-                                                                                                                                arg_94 -> memoized_78 arg_92 (memoized_79 arg_93 (memoized_26 arg_94 acc_87))
-                                                                                                Language.Haskell.TH.Syntax.DataD arg_95
-                                                                                                                                 arg_96
-                                                                                                                                 arg_97
-                                                                                                                                 arg_98
-                                                                                                                                 arg_99 -> memoized_100 arg_95 (memoized_6 arg_96 (memoized_101 arg_97 (memoized_102 arg_98 (memoized_103 arg_99 acc_87))))
-                                                                                                Language.Haskell.TH.Syntax.NewtypeD arg_104
-                                                                                                                                    arg_105
-                                                                                                                                    arg_106
-                                                                                                                                    arg_107
-                                                                                                                                    arg_108 -> memoized_100 arg_104 (memoized_6 arg_105 (memoized_101 arg_106 (memoized_109 arg_107 (memoized_103 arg_108 acc_87))))
-                                                                                                Language.Haskell.TH.Syntax.TySynD arg_110
-                                                                                                                                  arg_111
-                                                                                                                                  arg_112 -> memoized_6 arg_110 (memoized_101 arg_111 (memoized_38 arg_112 acc_87))
-                                                                                                Language.Haskell.TH.Syntax.ClassD arg_113
-                                                                                                                                  arg_114
-                                                                                                                                  arg_115
-                                                                                                                                  arg_116
-                                                                                                                                  arg_117 -> memoized_100 arg_113 (memoized_6 arg_114 (memoized_101 arg_115 (memoized_118 arg_116 (memoized_26 arg_117 acc_87))))
-                                                                                                Language.Haskell.TH.Syntax.InstanceD arg_119
-                                                                                                                                     arg_120
-                                                                                                                                     arg_121 -> memoized_100 arg_119 (memoized_38 arg_120 (memoized_26 arg_121 acc_87))
-                                                                                                Language.Haskell.TH.Syntax.SigD arg_122
-                                                                                                                                arg_123 -> memoized_6 arg_122 (memoized_38 arg_123 acc_87)
-                                                                                                Language.Haskell.TH.Syntax.ForeignD arg_124 -> memoized_125 arg_124 acc_87
-                                                                                                Language.Haskell.TH.Syntax.PragmaD arg_126 -> memoized_127 arg_126 acc_87
-                                                                                                Language.Haskell.TH.Syntax.FamilyD arg_128
-                                                                                                                                   arg_129
-                                                                                                                                   arg_130
-                                                                                                                                   arg_131 -> memoized_132 arg_128 (memoized_6 arg_129 (memoized_101 arg_130 (memoized_133 arg_131 acc_87)))
-                                                                                                Language.Haskell.TH.Syntax.DataInstD arg_134
-                                                                                                                                     arg_135
-                                                                                                                                     arg_136
-                                                                                                                                     arg_137
-                                                                                                                                     arg_138 -> memoized_100 arg_134 (memoized_6 arg_135 (memoized_139 arg_136 (memoized_102 arg_137 (memoized_103 arg_138 acc_87))))
-                                                                                                Language.Haskell.TH.Syntax.NewtypeInstD arg_140
-                                                                                                                                        arg_141
-                                                                                                                                        arg_142
-                                                                                                                                        arg_143
-                                                                                                                                        arg_144 -> memoized_100 arg_140 (memoized_6 arg_141 (memoized_139 arg_142 (memoized_109 arg_143 (memoized_103 arg_144 acc_87))))
-                                                                                                Language.Haskell.TH.Syntax.TySynInstD arg_145
-                                                                                                                                      arg_146
-                                                                                                                                      arg_147 -> memoized_6 arg_145 (memoized_139 arg_146 (memoized_38 arg_147 acc_87))) x_86)
-                  memoized_139 = GHC.Base.const GHC.Base.id
-                  memoized_133 = GHC.Base.const GHC.Base.id
-                  memoized_132 = GHC.Base.const GHC.Base.id
-                  memoized_127 = GHC.Base.const GHC.Base.id
-                  memoized_125 = GHC.Base.const GHC.Base.id
-                  memoized_118 = GHC.Base.const GHC.Base.id
-                  memoized_109 = GHC.Base.const GHC.Base.id
-                  memoized_103 = GHC.Base.const GHC.Base.id
-                  memoized_102 = GHC.Base.const GHC.Base.id
-                  memoized_101 = GHC.Base.const GHC.Base.id
-                  memoized_100 = GHC.Base.const GHC.Base.id
-                  memoized_91 = \x_148 acc_149 -> GHC.Base.const GHC.Base.id x_148 ((\_x_150 -> case _x_150 of
-                                                                                                    [] -> acc_149
-                                                                                                    (:) arg_151
-                                                                                                                  arg_152 -> memoized_153 arg_151 (memoized_91 arg_152 acc_149)) x_148)
-                  memoized_153 = \x_154 acc_155 -> GHC.Base.const GHC.Base.id x_154 ((\_x_156 -> case _x_156 of
-                                                                                                     Language.Haskell.TH.Syntax.Clause arg_157
-                                                                                                                                       arg_158
-                                                                                                                                       arg_159 -> memoized_18 arg_157 (memoized_79 arg_158 (memoized_26 arg_159 acc_155))) x_154)
-                  memoized_79 = \x_160 acc_161 -> GHC.Base.const GHC.Base.id x_160 ((\_x_162 -> case _x_162 of
-                                                                                                    Language.Haskell.TH.Syntax.GuardedB arg_163 -> memoized_164 arg_163 acc_161
-                                                                                                    Language.Haskell.TH.Syntax.NormalB arg_165 -> memoized_1 arg_165 acc_161) x_160)
-                  memoized_164 = \x_166 acc_167 -> GHC.Base.const GHC.Base.id x_166 ((\_x_168 -> case _x_168 of
-                                                                                                     [] -> acc_167
-                                                                                                     (:) arg_169
-                                                                                                                   arg_170 -> memoized_171 arg_169 (memoized_164 arg_170 acc_167)) x_166)
-                  memoized_171 = \x_172 acc_173 -> GHC.Base.const GHC.Base.id x_172 ((\_x_174 -> case _x_174 of
-                                                                                                     (,) arg_175
-                                                                                                                   arg_176 -> memoized_177 arg_175 (memoized_1 arg_176 acc_173)) x_172)
-                  memoized_177 = \x_178 acc_179 -> GHC.Base.const GHC.Base.id x_178 ((\_x_180 -> case _x_180 of
-                                                                                                     Language.Haskell.TH.Syntax.NormalG arg_181 -> memoized_1 arg_181 acc_179
-                                                                                                     Language.Haskell.TH.Syntax.PatG arg_182 -> memoized_31 arg_182 acc_179) x_178)
-                  memoized_31 = \x_183 acc_184 -> GHC.Base.const GHC.Base.id x_183 ((\_x_185 -> case _x_185 of
-                                                                                                    [] -> acc_184
-                                                                                                    (:) arg_186
-                                                                                                                  arg_187 -> memoized_188 arg_186 (memoized_31 arg_187 acc_184)) x_183)
-                  memoized_188 = \x_189 acc_190 -> GHC.Base.const GHC.Base.id x_189 ((\_x_191 -> case _x_191 of
-                                                                                                     Language.Haskell.TH.Syntax.BindS arg_192
-                                                                                                                                      arg_193 -> memoized_78 arg_192 (memoized_1 arg_193 acc_190)
-                                                                                                     Language.Haskell.TH.Syntax.LetS arg_194 -> memoized_26 arg_194 acc_190
-                                                                                                     Language.Haskell.TH.Syntax.NoBindS arg_195 -> memoized_1 arg_195 acc_190
-                                                                                                     Language.Haskell.TH.Syntax.ParS arg_196 -> memoized_197 arg_196 acc_190) x_189)
-                  memoized_197 = \x_198 acc_199 -> GHC.Base.const GHC.Base.id x_198 ((\_x_200 -> case _x_200 of
-                                                                                                     [] -> acc_199
-                                                                                                     (:) arg_201
-                                                                                                                   arg_202 -> memoized_31 arg_201 (memoized_197 arg_202 acc_199)) x_198)
-                  memoized_20 = \x_203 acc_204 -> GHC.Base.const GHC.Base.id x_203 ((\_x_205 -> case _x_205 of
-                                                                                                    [] -> acc_204
-                                                                                                    (:) arg_206
-                                                                                                                  arg_207 -> memoized_1 arg_206 (memoized_20 arg_207 acc_204)) x_203)
-                  memoized_18 = \x_208 acc_209 -> GHC.Base.const GHC.Base.id x_208 ((\_x_210 -> case _x_210 of
-                                                                                                    [] -> acc_209
-                                                                                                    (:) arg_211
-                                                                                                                  arg_212 -> memoized_78 arg_211 (memoized_18 arg_212 acc_209)) x_208)
-                  memoized_78 = \x_213 acc_214 -> GHC.Base.const GHC.Base.id x_213 ((\_x_215 -> case _x_215 of
-                                                                                                    Language.Haskell.TH.Syntax.LitP arg_216 -> memoized_9 arg_216 acc_214
-                                                                                                    Language.Haskell.TH.Syntax.VarP arg_217 -> memoized_6 arg_217 acc_214
-                                                                                                    Language.Haskell.TH.Syntax.TupP arg_218 -> memoized_18 arg_218 acc_214
-                                                                                                    Language.Haskell.TH.Syntax.ConP arg_219
-                                                                                                                                    arg_220 -> memoized_6 arg_219 (memoized_18 arg_220 acc_214)
-                                                                                                    Language.Haskell.TH.Syntax.InfixP arg_221
-                                                                                                                                      arg_222
-                                                                                                                                      arg_223 -> memoized_78 arg_221 (memoized_6 arg_222 (memoized_78 arg_223 acc_214))
-                                                                                                    Language.Haskell.TH.Syntax.TildeP arg_224 -> memoized_78 arg_224 acc_214
-                                                                                                    Language.Haskell.TH.Syntax.BangP arg_225 -> memoized_78 arg_225 acc_214
-                                                                                                    Language.Haskell.TH.Syntax.AsP arg_226
-                                                                                                                                   arg_227 -> memoized_6 arg_226 (memoized_78 arg_227 acc_214)
-                                                                                                    Language.Haskell.TH.Syntax.WildP -> acc_214
-                                                                                                    Language.Haskell.TH.Syntax.RecP arg_228
-                                                                                                                                    arg_229 -> memoized_6 arg_228 (memoized_230 arg_229 acc_214)
-                                                                                                    Language.Haskell.TH.Syntax.ListP arg_231 -> memoized_18 arg_231 acc_214
-                                                                                                    Language.Haskell.TH.Syntax.SigP arg_232
-                                                                                                                                    arg_233 -> memoized_78 arg_232 (memoized_38 arg_233 acc_214)
-                                                                                                    Language.Haskell.TH.Syntax.ViewP arg_234
-                                                                                                                                     arg_235 -> memoized_1 arg_234 (memoized_78 arg_235 acc_214)) x_213)
-                  memoized_38 = GHC.Base.const GHC.Base.id
-                  memoized_230 = \x_236 acc_237 -> GHC.Base.const GHC.Base.id x_236 ((\_x_238 -> case _x_238 of
-                                                                                                     [] -> acc_237
-                                                                                                     (:) arg_239
-                                                                                                                   arg_240 -> memoized_241 arg_239 (memoized_230 arg_240 acc_237)) x_236)
-                  memoized_241 = \x_242 acc_243 -> GHC.Base.const GHC.Base.id x_242 ((\_x_244 -> case _x_244 of
-                                                                                                     (,) arg_245
-                                                                                                                   arg_246 -> memoized_6 arg_245 (memoized_78 arg_246 acc_243)) x_242)
-                  memoized_15 = \x_247 acc_248 -> GHC.Base.const GHC.Base.id x_247 ((\_x_249 -> case _x_249 of
-                                                                                                    Data.Maybe.Nothing -> acc_248
-                                                                                                    Data.Maybe.Just arg_250 -> memoized_1 arg_250 acc_248) x_247)
-                  memoized_9 = GHC.Base.const GHC.Base.id
-                  memoized_6 = GHC.Base.const GHC.Base.id
-               in memoized_1) e_0 Set.empty
+varSet e_1   = (let memoized_2 = \x_3 acc_4 -> accVarRef x_3 ((\_x_5 -> case _x_5 of
+                                                                                 Language.Haskell.TH.Syntax.VarE arg_6 -> memoized_7 arg_6 acc_4
+                                                                                 Language.Haskell.TH.Syntax.ConE arg_8 -> memoized_7 arg_8 acc_4
+                                                                                 Language.Haskell.TH.Syntax.LitE arg_9 -> memoized_10 arg_9 acc_4
+                                                                                 Language.Haskell.TH.Syntax.AppE arg_11
+                                                                                                                 arg_12 -> memoized_2 arg_11 (memoized_2 arg_12 acc_4)
+                                                                                 Language.Haskell.TH.Syntax.InfixE arg_13
+                                                                                                                   arg_14
+                                                                                                                   arg_15 -> memoized_16 arg_13 (memoized_2 arg_14 (memoized_16 arg_15 acc_4))
+                                                                                 Language.Haskell.TH.Syntax.UInfixE arg_17
+                                                                                                                    arg_18
+                                                                                                                    arg_19 -> memoized_2 arg_17 (memoized_2 arg_18 (memoized_2 arg_19 acc_4))
+                                                                                 Language.Haskell.TH.Syntax.ParensE arg_20 -> memoized_2 arg_20 acc_4
+                                                                                 Language.Haskell.TH.Syntax.LamE arg_21
+                                                                                                                 arg_22 -> memoized_23 arg_21 (memoized_2 arg_22 acc_4)
+                                                                                 Language.Haskell.TH.Syntax.LamCaseE arg_24 -> memoized_25 arg_24 acc_4
+                                                                                 Language.Haskell.TH.Syntax.TupE arg_26 -> memoized_27 arg_26 acc_4
+                                                                                 Language.Haskell.TH.Syntax.UnboxedTupE arg_28 -> memoized_27 arg_28 acc_4
+                                                                                 Language.Haskell.TH.Syntax.CondE arg_29
+                                                                                                                  arg_30
+                                                                                                                  arg_31 -> memoized_2 arg_29 (memoized_2 arg_30 (memoized_2 arg_31 acc_4))
+                                                                                 Language.Haskell.TH.Syntax.MultiIfE arg_32 -> memoized_33 arg_32 acc_4
+                                                                                 Language.Haskell.TH.Syntax.LetE arg_34
+                                                                                                                 arg_35 -> memoized_36 arg_34 (memoized_2 arg_35 acc_4)
+                                                                                 Language.Haskell.TH.Syntax.CaseE arg_37
+                                                                                                                  arg_38 -> memoized_2 arg_37 (memoized_25 arg_38 acc_4)
+                                                                                 Language.Haskell.TH.Syntax.DoE arg_39 -> memoized_40 arg_39 acc_4
+                                                                                 Language.Haskell.TH.Syntax.CompE arg_41 -> memoized_40 arg_41 acc_4
+                                                                                 Language.Haskell.TH.Syntax.ArithSeqE arg_42 -> memoized_43 arg_42 acc_4
+                                                                                 Language.Haskell.TH.Syntax.ListE arg_44 -> memoized_27 arg_44 acc_4
+                                                                                 Language.Haskell.TH.Syntax.SigE arg_45
+                                                                                                                 arg_46 -> memoized_2 arg_45 (memoized_47 arg_46 acc_4)
+                                                                                 Language.Haskell.TH.Syntax.RecConE arg_48
+                                                                                                                    arg_49 -> memoized_7 arg_48 (memoized_50 arg_49 acc_4)
+                                                                                 Language.Haskell.TH.Syntax.RecUpdE arg_51
+                                                                                                                    arg_52 -> memoized_2 arg_51 (memoized_50 arg_52 acc_4)) x_3)
+                    memoized_50 = \x_53 acc_54 -> GHC.Base.const GHC.Base.id x_53 ((\_x_55 -> case _x_55 of
+                                                                                                  [] -> acc_54
+                                                                                                  (:) arg_56
+                                                                                                                arg_57 -> memoized_58 arg_56 (memoized_50 arg_57 acc_54)) x_53)
+                    memoized_58 = \x_59 acc_60 -> GHC.Base.const GHC.Base.id x_59 ((\_x_61 -> case _x_61 of
+                                                                                                  (,) arg_62
+                                                                                                                arg_63 -> memoized_7 arg_62 (memoized_2 arg_63 acc_60)) x_59)
+                    memoized_43 = \x_64 acc_65 -> GHC.Base.const GHC.Base.id x_64 ((\_x_66 -> case _x_66 of
+                                                                                                  Language.Haskell.TH.Syntax.FromR arg_67 -> memoized_2 arg_67 acc_65
+                                                                                                  Language.Haskell.TH.Syntax.FromThenR arg_68
+                                                                                                                                       arg_69 -> memoized_2 arg_68 (memoized_2 arg_69 acc_65)
+                                                                                                  Language.Haskell.TH.Syntax.FromToR arg_70
+                                                                                                                                     arg_71 -> memoized_2 arg_70 (memoized_2 arg_71 acc_65)
+                                                                                                  Language.Haskell.TH.Syntax.FromThenToR arg_72
+                                                                                                                                         arg_73
+                                                                                                                                         arg_74 -> memoized_2 arg_72 (memoized_2 arg_73 (memoized_2 arg_74 acc_65))) x_64)
+                    memoized_27 = \x_75 acc_76 -> GHC.Base.const GHC.Base.id x_75 ((\_x_77 -> case _x_77 of
+                                                                                                  [] -> acc_76
+                                                                                                  (:) arg_78
+                                                                                                                arg_79 -> memoized_2 arg_78 (memoized_27 arg_79 acc_76)) x_75)
+                    memoized_25 = \x_80 acc_81 -> GHC.Base.const GHC.Base.id x_80 ((\_x_82 -> case _x_82 of
+                                                                                                  [] -> acc_81
+                                                                                                  (:) arg_83
+                                                                                                                arg_84 -> memoized_85 arg_83 (memoized_25 arg_84 acc_81)) x_80)
+                    memoized_85 = \x_86 acc_87 -> GHC.Base.const GHC.Base.id x_86 ((\_x_88 -> case _x_88 of
+                                                                                                  Language.Haskell.TH.Syntax.Match arg_89
+                                                                                                                                   arg_90
+                                                                                                                                   arg_91 -> memoized_92 arg_89 (memoized_93 arg_90 (memoized_36 arg_91 acc_87))) x_86)
+                    memoized_93 = \x_94 acc_95 -> GHC.Base.const GHC.Base.id x_94 ((\_x_96 -> case _x_96 of
+                                                                                                  Language.Haskell.TH.Syntax.GuardedB arg_97 -> memoized_33 arg_97 acc_95
+                                                                                                  Language.Haskell.TH.Syntax.NormalB arg_98 -> memoized_2 arg_98 acc_95) x_94)
+                    memoized_33 = \x_99 acc_100 -> GHC.Base.const GHC.Base.id x_99 ((\_x_101 -> case _x_101 of
+                                                                                                    [] -> acc_100
+                                                                                                    (:) arg_102
+                                                                                                                  arg_103 -> memoized_104 arg_102 (memoized_33 arg_103 acc_100)) x_99)
+                    memoized_104 = \x_105 acc_106 -> GHC.Base.const GHC.Base.id x_105 ((\_x_107 -> case _x_107 of
+                                                                                                       (,) arg_108
+                                                                                                                     arg_109 -> memoized_110 arg_108 (memoized_2 arg_109 acc_106)) x_105)
+                    memoized_110 = \x_111 acc_112 -> GHC.Base.const GHC.Base.id x_111 ((\_x_113 -> case _x_113 of
+                                                                                                       Language.Haskell.TH.Syntax.NormalG arg_114 -> memoized_2 arg_114 acc_112
+                                                                                                       Language.Haskell.TH.Syntax.PatG arg_115 -> memoized_40 arg_115 acc_112) x_111)
+                    memoized_40 = \x_116 acc_117 -> GHC.Base.const GHC.Base.id x_116 ((\_x_118 -> case _x_118 of
+                                                                                                      [] -> acc_117
+                                                                                                      (:) arg_119
+                                                                                                                    arg_120 -> memoized_121 arg_119 (memoized_40 arg_120 acc_117)) x_116)
+                    memoized_121 = \x_122 acc_123 -> GHC.Base.const GHC.Base.id x_122 ((\_x_124 -> case _x_124 of
+                                                                                                       Language.Haskell.TH.Syntax.BindS arg_125
+                                                                                                                                        arg_126 -> memoized_92 arg_125 (memoized_2 arg_126 acc_123)
+                                                                                                       Language.Haskell.TH.Syntax.LetS arg_127 -> memoized_36 arg_127 acc_123
+                                                                                                       Language.Haskell.TH.Syntax.NoBindS arg_128 -> memoized_2 arg_128 acc_123
+                                                                                                       Language.Haskell.TH.Syntax.ParS arg_129 -> memoized_130 arg_129 acc_123) x_122)
+                    memoized_130 = \x_131 acc_132 -> GHC.Base.const GHC.Base.id x_131 ((\_x_133 -> case _x_133 of
+                                                                                                       [] -> acc_132
+                                                                                                       (:) arg_134
+                                                                                                                     arg_135 -> memoized_40 arg_134 (memoized_130 arg_135 acc_132)) x_131)
+                    memoized_36 = \x_136 acc_137 -> GHC.Base.const GHC.Base.id x_136 ((\_x_138 -> case _x_138 of
+                                                                                                      [] -> acc_137
+                                                                                                      (:) arg_139
+                                                                                                                    arg_140 -> memoized_141 arg_139 (memoized_36 arg_140 acc_137)) x_136)
+                    memoized_141 = \x_142 acc_143 -> GHC.Base.const GHC.Base.id x_142 ((\_x_144 -> case _x_144 of
+                                                                                                       Language.Haskell.TH.Syntax.FunD arg_145
+                                                                                                                                       arg_146 -> memoized_7 arg_145 (memoized_147 arg_146 acc_143)
+                                                                                                       Language.Haskell.TH.Syntax.ValD arg_148
+                                                                                                                                       arg_149
+                                                                                                                                       arg_150 -> memoized_92 arg_148 (memoized_93 arg_149 (memoized_36 arg_150 acc_143))
+                                                                                                       Language.Haskell.TH.Syntax.DataD arg_151
+                                                                                                                                        arg_152
+                                                                                                                                        arg_153
+                                                                                                                                        arg_154
+                                                                                                                                        arg_155 -> memoized_156 arg_151 (memoized_7 arg_152 (memoized_157 arg_153 (memoized_158 arg_154 (memoized_159 arg_155 acc_143))))
+                                                                                                       Language.Haskell.TH.Syntax.NewtypeD arg_160
+                                                                                                                                           arg_161
+                                                                                                                                           arg_162
+                                                                                                                                           arg_163
+                                                                                                                                           arg_164 -> memoized_156 arg_160 (memoized_7 arg_161 (memoized_157 arg_162 (memoized_165 arg_163 (memoized_159 arg_164 acc_143))))
+                                                                                                       Language.Haskell.TH.Syntax.TySynD arg_166
+                                                                                                                                         arg_167
+                                                                                                                                         arg_168 -> memoized_7 arg_166 (memoized_157 arg_167 (memoized_47 arg_168 acc_143))
+                                                                                                       Language.Haskell.TH.Syntax.ClassD arg_169
+                                                                                                                                         arg_170
+                                                                                                                                         arg_171
+                                                                                                                                         arg_172
+                                                                                                                                         arg_173 -> memoized_156 arg_169 (memoized_7 arg_170 (memoized_157 arg_171 (memoized_174 arg_172 (memoized_36 arg_173 acc_143))))
+                                                                                                       Language.Haskell.TH.Syntax.InstanceD arg_175
+                                                                                                                                            arg_176
+                                                                                                                                            arg_177 -> memoized_156 arg_175 (memoized_47 arg_176 (memoized_36 arg_177 acc_143))
+                                                                                                       Language.Haskell.TH.Syntax.SigD arg_178
+                                                                                                                                       arg_179 -> memoized_7 arg_178 (memoized_47 arg_179 acc_143)
+                                                                                                       Language.Haskell.TH.Syntax.ForeignD arg_180 -> memoized_181 arg_180 acc_143
+                                                                                                       Language.Haskell.TH.Syntax.InfixD arg_182
+                                                                                                                                         arg_183 -> memoized_184 arg_182 (memoized_7 arg_183 acc_143)
+                                                                                                       Language.Haskell.TH.Syntax.PragmaD arg_185 -> memoized_186 arg_185 acc_143
+                                                                                                       Language.Haskell.TH.Syntax.FamilyD arg_187
+                                                                                                                                          arg_188
+                                                                                                                                          arg_189
+                                                                                                                                          arg_190 -> memoized_191 arg_187 (memoized_7 arg_188 (memoized_157 arg_189 (memoized_192 arg_190 acc_143)))
+                                                                                                       Language.Haskell.TH.Syntax.DataInstD arg_193
+                                                                                                                                            arg_194
+                                                                                                                                            arg_195
+                                                                                                                                            arg_196
+                                                                                                                                            arg_197 -> memoized_156 arg_193 (memoized_7 arg_194 (memoized_198 arg_195 (memoized_158 arg_196 (memoized_159 arg_197 acc_143))))
+                                                                                                       Language.Haskell.TH.Syntax.NewtypeInstD arg_199
+                                                                                                                                               arg_200
+                                                                                                                                               arg_201
+                                                                                                                                               arg_202
+                                                                                                                                               arg_203 -> memoized_156 arg_199 (memoized_7 arg_200 (memoized_198 arg_201 (memoized_165 arg_202 (memoized_159 arg_203 acc_143))))
+                                                                                                       Language.Haskell.TH.Syntax.TySynInstD arg_204
+                                                                                                                                             arg_205
+                                                                                                                                             arg_206 -> memoized_7 arg_204 (memoized_198 arg_205 (memoized_47 arg_206 acc_143))) x_142)
+                    memoized_198 = GHC.Base.const GHC.Base.id
+                    memoized_192 = GHC.Base.const GHC.Base.id
+                    memoized_191 = GHC.Base.const GHC.Base.id
+                    memoized_186 = \x_207 acc_208 -> GHC.Base.const GHC.Base.id x_207 ((\_x_209 -> case _x_209 of
+                                                                                                       Language.Haskell.TH.Syntax.InlineP arg_210
+                                                                                                                                          arg_211
+                                                                                                                                          arg_212
+                                                                                                                                          arg_213 -> memoized_7 arg_210 (memoized_214 arg_211 (memoized_215 arg_212 (memoized_216 arg_213 acc_208)))
+                                                                                                       Language.Haskell.TH.Syntax.SpecialiseP arg_217
+                                                                                                                                              arg_218
+                                                                                                                                              arg_219
+                                                                                                                                              arg_220 -> memoized_7 arg_217 (memoized_47 arg_218 (memoized_221 arg_219 (memoized_216 arg_220 acc_208)))
+                                                                                                       Language.Haskell.TH.Syntax.SpecialiseInstP arg_222 -> memoized_47 arg_222 acc_208
+                                                                                                       Language.Haskell.TH.Syntax.RuleP arg_223
+                                                                                                                                        arg_224
+                                                                                                                                        arg_225
+                                                                                                                                        arg_226
+                                                                                                                                        arg_227 -> memoized_228 arg_223 (memoized_229 arg_224 (memoized_2 arg_225 (memoized_2 arg_226 (memoized_216 arg_227 acc_208))))) x_207)
+                    memoized_229 = GHC.Base.const GHC.Base.id
+                    memoized_228 = GHC.Base.const GHC.Base.id
+                    memoized_221 = GHC.Base.const GHC.Base.id
+                    memoized_216 = GHC.Base.const GHC.Base.id
+                    memoized_215 = GHC.Base.const GHC.Base.id
+                    memoized_214 = GHC.Base.const GHC.Base.id
+                    memoized_184 = GHC.Base.const GHC.Base.id
+                    memoized_181 = GHC.Base.const GHC.Base.id
+                    memoized_174 = GHC.Base.const GHC.Base.id
+                    memoized_165 = GHC.Base.const GHC.Base.id
+                    memoized_159 = GHC.Base.const GHC.Base.id
+                    memoized_158 = GHC.Base.const GHC.Base.id
+                    memoized_157 = GHC.Base.const GHC.Base.id
+                    memoized_156 = GHC.Base.const GHC.Base.id
+                    memoized_147 = \x_230 acc_231 -> GHC.Base.const GHC.Base.id x_230 ((\_x_232 -> case _x_232 of
+                                                                                                       [] -> acc_231
+                                                                                                       (:) arg_233
+                                                                                                                     arg_234 -> memoized_235 arg_233 (memoized_147 arg_234 acc_231)) x_230)
+                    memoized_235 = \x_236 acc_237 -> GHC.Base.const GHC.Base.id x_236 ((\_x_238 -> case _x_238 of
+                                                                                                       Language.Haskell.TH.Syntax.Clause arg_239
+                                                                                                                                         arg_240
+                                                                                                                                         arg_241 -> memoized_23 arg_239 (memoized_93 arg_240 (memoized_36 arg_241 acc_237))) x_236)
+                    memoized_23 = \x_242 acc_243 -> GHC.Base.const GHC.Base.id x_242 ((\_x_244 -> case _x_244 of
+                                                                                                      [] -> acc_243
+                                                                                                      (:) arg_245
+                                                                                                                    arg_246 -> memoized_92 arg_245 (memoized_23 arg_246 acc_243)) x_242)
+                    memoized_92 = \x_247 acc_248 -> GHC.Base.const GHC.Base.id x_247 ((\_x_249 -> case _x_249 of
+                                                                                                      Language.Haskell.TH.Syntax.LitP arg_250 -> memoized_10 arg_250 acc_248
+                                                                                                      Language.Haskell.TH.Syntax.VarP arg_251 -> memoized_7 arg_251 acc_248
+                                                                                                      Language.Haskell.TH.Syntax.TupP arg_252 -> memoized_23 arg_252 acc_248
+                                                                                                      Language.Haskell.TH.Syntax.UnboxedTupP arg_253 -> memoized_23 arg_253 acc_248
+                                                                                                      Language.Haskell.TH.Syntax.ConP arg_254
+                                                                                                                                      arg_255 -> memoized_7 arg_254 (memoized_23 arg_255 acc_248)
+                                                                                                      Language.Haskell.TH.Syntax.InfixP arg_256
+                                                                                                                                        arg_257
+                                                                                                                                        arg_258 -> memoized_92 arg_256 (memoized_7 arg_257 (memoized_92 arg_258 acc_248))
+                                                                                                      Language.Haskell.TH.Syntax.UInfixP arg_259
+                                                                                                                                         arg_260
+                                                                                                                                         arg_261 -> memoized_92 arg_259 (memoized_7 arg_260 (memoized_92 arg_261 acc_248))
+                                                                                                      Language.Haskell.TH.Syntax.ParensP arg_262 -> memoized_92 arg_262 acc_248
+                                                                                                      Language.Haskell.TH.Syntax.TildeP arg_263 -> memoized_92 arg_263 acc_248
+                                                                                                      Language.Haskell.TH.Syntax.BangP arg_264 -> memoized_92 arg_264 acc_248
+                                                                                                      Language.Haskell.TH.Syntax.AsP arg_265
+                                                                                                                                     arg_266 -> memoized_7 arg_265 (memoized_92 arg_266 acc_248)
+                                                                                                      Language.Haskell.TH.Syntax.WildP -> acc_248
+                                                                                                      Language.Haskell.TH.Syntax.RecP arg_267
+                                                                                                                                      arg_268 -> memoized_7 arg_267 (memoized_269 arg_268 acc_248)
+                                                                                                      Language.Haskell.TH.Syntax.ListP arg_270 -> memoized_23 arg_270 acc_248
+                                                                                                      Language.Haskell.TH.Syntax.SigP arg_271
+                                                                                                                                      arg_272 -> memoized_92 arg_271 (memoized_47 arg_272 acc_248)
+                                                                                                      Language.Haskell.TH.Syntax.ViewP arg_273
+                                                                                                                                       arg_274 -> memoized_2 arg_273 (memoized_92 arg_274 acc_248)) x_247)
+                    memoized_47 = GHC.Base.const GHC.Base.id
+                    memoized_269 = \x_275 acc_276 -> GHC.Base.const GHC.Base.id x_275 ((\_x_277 -> case _x_277 of
+                                                                                                       [] -> acc_276
+                                                                                                       (:) arg_278
+                                                                                                                     arg_279 -> memoized_280 arg_278 (memoized_269 arg_279 acc_276)) x_275)
+                    memoized_280 = \x_281 acc_282 -> GHC.Base.const GHC.Base.id x_281 ((\_x_283 -> case _x_283 of
+                                                                                                       (,) arg_284
+                                                                                                                     arg_285 -> memoized_7 arg_284 (memoized_92 arg_285 acc_282)) x_281)
+                    memoized_16 = \x_286 acc_287 -> GHC.Base.const GHC.Base.id x_286 ((\_x_288 -> case _x_288 of
+                                                                                                      Data.Maybe.Nothing -> acc_287
+                                                                                                      Data.Maybe.Just arg_289 -> memoized_2 arg_289 acc_287) x_286)
+                    memoized_10 = GHC.Base.const GHC.Base.id
+                    memoized_7 = GHC.Base.const GHC.Base.id
+                 in memoized_2) e_1 Set.empty
