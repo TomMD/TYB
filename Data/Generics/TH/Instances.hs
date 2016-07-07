@@ -47,6 +47,9 @@ deriving instance Ord Phases
 deriving instance Ord RuleMatch
 deriving instance Ord FixityDirection
 deriving instance Ord Fixity
+deriving instance Ord Role
+deriving instance Ord AnnTarget
+deriving instance Ord TySynEqn
 
 --------------------------------------------------------------------------------
 -- Quasi instances for monad transformers
